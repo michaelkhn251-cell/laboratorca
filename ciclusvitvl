@@ -1,0 +1,42 @@
+/******************************
+* Автор:   Хнкоян Михаил      *
+* Задание: Циклы с ветвлением *
+* Вариант: 32                 *
+******************************/
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+  double massa, nachalnayaTemperatura;
+  double teploemkostLda, teploemkostVody, teplotaPlavleniya;
+  double teplotaNagreva, teplotaPolnogoPlavleniya;
+  double Q, temperatura, dolyaRastayavshegoLda;
+  
+  massa = 0.25;
+  nachalnayaTemperatura = -20;
+  teploemkostLda = 2100;
+  teploemkostVody = 4200;
+  teplotaPlavleniya = 334000;
+  teplotaNagreva = -massa * teploemkostLda * nachalnayaTemperatura;
+  teplotaPolnogoPlavleniya = teplotaNagreva + massa * teplotaPlavleniya;
+  
+  cout << fixed << setprecision(6);
+  for (Q = 0; Q <= 140000; Q += 20000) {
+    if (Q < teplotaNagreva) {
+      temperatura = nachalnayaTemperatura + Q / (massa * teploemkostLda);
+      dolyaRastayavshegoLda = 0;
+    }
+    else if (Q <= teplotaPolnogoPlavleniya) {
+      temperatura = 0;
+      dolyaRastayavshegoLda = (Q - teplotaNagreva) / (massa * teplotaPlavleniya);
+    }
+    else {
+      temperatura = (Q - teplotaPolnogoPlavleniya) / (massa * teploemkostVody);
+      dolyaRastayavshegoLda = 1;
+    }
+    cout << Q << " " << temperatura << " " << dolyaRastayavshegoLda << endl;
+  }
+  return 0;
+}
+
